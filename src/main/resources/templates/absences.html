@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Absences</title>
+</head>
+<body>
+<div layout:fragment="pageContent">
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                Liste des absences
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Justifiée</th>
+                        <th sec:authorize="hasRole('ROLE_ADMIN')"></th>
+                        <th sec:authorize="hasRole('ROLE_ADMIN')"></th>
+                    </tr>
+                    <tr th:each="a:${absences}">
+                        <td th:text="${a.id}"></td>
+                        <td th:text="${a.date}"></td>
+                        <td class="text-success" th:if="${a.justifie == true}"><strong>Oui</strong></td>
+                        <td class="text-danger" th:if="${a.justifie == false}"><strong>Non</strong></td>
+                        <td sec:authorize="hasRole('ROLE_ADMIN')" ><a
+                                onclick="return confirm('Voulez-vous vraiment mettre à jour absence ?')"
+                                class="btn btn-info"
+                                th:href="@{absenceJustifiee(idAbsence=${a.id})}">Absence Justifiée</a>
+                        </td>
+                        <td sec:authorize="hasRole('ROLE_ADMIN')" ><a
+                                onclick="return confirm('Voulez-vous vraiment supprimer absence ?')"
+                                class="btn btn-danger"
+                                th:href="@{supprimerAbsence(idAbsence=${a.id}, idUser=${id})}">Supprimer Absence</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Congés</title>
+</head>
+<body>
+<div layout:fragment="pageContent">
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header">
+                Liste des congés
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th>ID</th>
+                        <th>Date début</th>
+                        <th>Date fin</th>
+                    </tr>
+                    <tr th:each="c:${conges}">
+                        <td th:text="${c.id}"></td>
+                        <td th:text="${c.debutConge}"></td>
+                        <td th:text="${c.finConge}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

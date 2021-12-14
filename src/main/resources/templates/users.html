@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz//lathymeleafyout"
+      layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+
+        table {
+            width: 750px;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            width: 1100px;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <title>Page Employés</title>
+</head>
+<body>
+<div layout:fragment="pageContent">
+    <div class="container mt-5 ">
+        <div class="card">
+            <div class="card-header">
+                Liste des employés
+            </div>
+            <div class="card-body">
+                <form method="get" th:action="@{users}">
+                    <div class="form-group">
+                        <label>Matricule </label>
+                        <input type="text" name="motCle" th:value="${motCle}">
+                        <button class="btn btn-success">Chercher</button>
+                    </div>
+                </form>
+                <table class="table">
+                    <tr>
+                        <th>Matricule</th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Jours congé</th>
+                        <th>Active</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr th:each="u:${users}">
+                        <td th:text="${u.matricule}"></td>
+                        <td th:text="${u.nom}"></td>
+                        <td th:text="${u.prenom}"></td>
+                        <td th:text="${u.nombreConge}"></td>
+                        <td class="text-success" th:if="${u.active == true}"><strong>Oui</strong></td>
+                        <td class="text-danger" th:if="${u.active == false}"><strong>Non</strong></td>
+                        <td><a
+                                onclick="return confirm('Voulez-vous vraiment supprimer utilisateur ?')"
+                                class="btn btn-danger"
+                                th:href="@{supprimerUser(id=${u.id}, page=${currentPage}, size=${size}, motCle=${motCle})}"><span
+                                class="fa fa-trash"></span></a>
+                        </td>
+                        <td>
+                            <a th:if="${u.active == true}" class="btn btn-warning"
+                               th:href="@{activerUser(id=${u.id}, page=${currentPage}, size=${size}, motCle=${motCle})}">Désactiver</a>
+                            <a th:if="${u.active == false}" class="btn btn-success"
+                               th:href="@{activerUser(id=${u.id}, page=${currentPage}, size=${size}, motCle=${motCle})}">Activer</a>
+                        </td>
+                        <td><a
+                                onclick="return confirm('Voulez-vous vraiment ajouter une absence?')"
+                                class="btn btn-dark"
+                                th:href="@{absent(id=${u.id}, page=${currentPage}, size=${size}, motCle=${motCle})}">Absent</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" th:href="@{absences(idUser=${u.id})}">Absences</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" th:href="@{conges(idUser=${u.id})}">Congés</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" th:href="@{ajouterConge(idUser=${u.id})}">Ajouter Congé</a>
+                        </td>
+                    </tr>
+                </table>
+                <ul class="nav nav-pills">
+                    <li th:each="page,status:${pages}">
+                        <a th:class="${status.index == currentPage?'btn btn-primary':'btn'}"
+                           th:href="@{users(page=${status.index}, motCle=${motCle}, size=${size})}"
+                           th:text="${status.index + 1}"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

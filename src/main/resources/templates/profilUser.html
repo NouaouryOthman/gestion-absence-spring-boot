@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template">
+<head>
+    <meta charset="UTF-8">
+    <title>Details employé</title>
+    <style>
+        .app-button{
+        list-style: none;
+        text-align: center;
+        background-color: #01AAAD;
+    }</style>
+</head>
+<body>
+<div layout:fragment="pageContent">
+    <div class="container mt-5">
+        <div class="card"  width="50%">
+            <div class="card-header">Vos informations  :</div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>Matricule :</label>
+                    <strong><label th:text="${user.matricule}"></label></strong>
+                </div>
+                <div class="form-group">
+                    <label>Nom :</label>
+                    <strong><label th:text="${user.nom}"></label></strong>
+                </div>
+                <div class="form-group">
+                    <label>Prénom :</label>
+                    <strong><label th:text="${user.prenom}"></label></strong>
+                </div>
+                <div class="form-group">
+                    <label>Email :</label>
+                    <strong><label th:text="${user.email}"></label></strong>
+                </div>
+                <div class="form-group">
+                    <label>Jours de congé restants :</label>
+                    <strong><label th:text="${user.nombreConge}"></label></strong>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a th:href="@{mesConges}" class="btn btn-primary app-button">Voir vos congés</a>
+                <a th:href="@{mesAbsences}" class="btn btn-primary app-button">Voir vos absences</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
